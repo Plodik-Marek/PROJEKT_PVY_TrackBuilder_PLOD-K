@@ -3,6 +3,10 @@ const newMapEl = document.getElementById("newMap")
 const menu2El = document.getElementById("menu2")
 const backEl = document.getElementById("back")
 const gridEl = document.getElementById("grid")
+const loadEl = document.getElementById("load")
+const saveEl = document.getElementById("save")
+const listEl = document.getElementById("list")
+
 
 let map = []
 
@@ -60,6 +64,100 @@ gridEl.addEventListener("click", (e)=>{
 
 })
 
+
+function updateMapsList(){
+
+    listEl.innerHTML = ""
+
+    for(let i=0;i<localStorage.length;i++){
+
+        const name = localStorage.key(i)
+
+        const option = document.createElement("option")
+        option.value = name
+        option.textContent = name
+
+        listEl.appendChild(option)
+
+    }
+
+}
+
+
+
+
+
+
+
+
+function save(){  /* funkce pro uložení mapy */
+ 
+const name = prompt("Zadej název mapy")
+if(!name) return
+
+localStorage.setItem(name,JSON.stringify(map))
+
+updateMapsList()
+}
+
+
+function load(){
+
+      const name = listEl.value
+    const data = localStorage.getItem(name)
+
+    if(!data){
+         alert("mapa neexistuje")
+         return
+    }
+
+    map = JSON.parse(data)
+
+    menuEl.classList.add("hidden")
+    menu2El.classList.remove("hidden")
+
+    drawMap()
+}
+
+
+
+function drawMap(){
+
+    gridEl.innerHTML=""
+
+    for(let y=0;y<20;y++){
+
+        for(let x=0;x<20;x++){
+
+            const cell = document.createElement("div")
+            cell.classList.add("cell")
+
+            cell.dataset.x = x
+            cell.dataset.y = y
+
+            const type = map[y][x]
+
+            if(type === "road") cell.classList.add("road")
+            if(type === "water") cell.classList.add("water")
+
+            gridEl.appendChild(cell)
+
+        }
+
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
 newMapEl.addEventListener("click", () => {
 
     menuEl.classList.add("hidden")
@@ -75,3 +173,10 @@ backEl.addEventListener("click", () => {
     menuEl.classList.remove("hidden")
 
 })
+
+
+
+
+saveEl.addEventListener("click",save)
+loadEl.addEventListener("click",load)
+updateMapsList()

@@ -3,6 +3,11 @@ body{
   font-family: Arial;
 }
 
+main{
+
+    border: 2px solid black;
+    width: 700px;
+}
 
 #grid{
 
@@ -42,4 +47,13 @@ button{
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
+    color: rgb(43, 247, 236);
+    background-color: rgb(0, 0, 0);
+    border-radius: 7px;
+}
+
+#list{
+
+    color: rgb(29, 215, 240);
+    background-color: black;
 }
