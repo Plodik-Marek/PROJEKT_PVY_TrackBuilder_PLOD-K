@@ -6,11 +6,14 @@ const gridEl = document.getElementById("grid")
 const loadEl = document.getElementById("load")
 const saveEl = document.getElementById("save")
 const listEl = document.getElementById("list")
+const listTextEl = document.getElementById("listText")
 
 
 let map = []
 
 function createGrid(){
+
+    gridEl.style.display = "grid"
 
     gridEl.innerHTML = ""
     map = []
@@ -116,6 +119,8 @@ function load(){
     menuEl.classList.add("hidden")
     menu2El.classList.remove("hidden")
 
+    gridEl.style.display = "grid"
+
     drawMap()
 }
 
@@ -163,14 +168,25 @@ newMapEl.addEventListener("click", () => {
     menuEl.classList.add("hidden")
     menu2El.classList.remove("hidden")
 
+    loadEl.classList.add("hidden")
+    listEl.classList.add("hidden")
+
+    saveEl.classList.remove("hidden")
+    
+    listTextEl.classList.add("hidden")
+
+
     createGrid()
 
 })
 
 backEl.addEventListener("click", () => {
 
-    menu2El.classList.add("hidden")
+     menu2El.classList.add("hidden")
     menuEl.classList.remove("hidden")
+
+    loadEl.classList.remove("hidden")
+    listEl.classList.remove("hidden")
 
 })
 

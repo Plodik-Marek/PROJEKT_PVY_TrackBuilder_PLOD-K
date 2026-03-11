@@ -10,7 +10,7 @@ main{
 }
 
 #grid{
-
+display: none;
 display: grid;
 grid-template-columns: repeat(20,30px);
 grid-template-rows: repeat(20,30px);
