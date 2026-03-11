@@ -8,29 +8,36 @@ const saveEl = document.getElementById("save")
 const listEl = document.getElementById("list")
 const listTextEl = document.getElementById("listText")
 
+const h1El = document.getElementById("h1")
+const h2El = document.getElementById("h2")
+
 
 let map = []
+
+h2El.classList.add("hidden")
+saveEl.classList.add("hidden")
 
 function createGrid(){
 
     gridEl.style.display = "grid"
 
     gridEl.innerHTML = ""
+
     map = []
 
-    for(let y = 0; y < 20; y++){
+    for(let y = 0; y < 20; y++){  //tvoří řádky
 
         let row = []
 
-        for(let x = 0; x < 20; x++){
+        for(let x = 0; x < 20; x++){  // tvoří přímo buňky
 
             const cell = document.createElement("div")
             cell.classList.add("cell")
 
-            cell.dataset.x = x
+            cell.dataset.x = x  // nastavování pozice x a y 
             cell.dataset.y = y
 
-            gridEl.appendChild(cell)
+            gridEl.appendChild(cell) // přidávání do gridu
 
             row.push("grass")
 
@@ -44,37 +51,37 @@ function createGrid(){
 
 gridEl.addEventListener("click", (e)=>{
 
-    if(!e.target.classList.contains("cell")) return
+    if(!e.target.classList.contains("cell")) return    
 
-    const x = e.target.dataset.x
+    const x = e.target.dataset.x    //target je prvek na který klikl uživatel a dataset slouží k ukládání vlastních dat do html prvků
     const y = e.target.dataset.y
 
-    const type = map[y][x]
+    const type = map[x][y]
 
     if(type === "grass"){
-        map[y][x] = "road"
+        map[x][y] = "road"
         e.target.classList.add("road")
     }
     else if(type === "road"){
-        map[y][x] = "water"
+        map[x][y] = "water"
         e.target.classList.remove("road")
         e.target.classList.add("water")
     }
     else{
-        map[y][x] = "grass"
+        map[x][y] = "grass"
         e.target.classList.remove("water")
     }
 
 })
 
 
-function updateMapsList(){
+function updateMapsList(){ //logika seznamu
 
     listEl.innerHTML = ""
 
-    for(let i=0;i<localStorage.length;i++){
+    for(let i=0;i<localStorage.length;i++){  //toto projde localStorage
 
-        const name = localStorage.key(i)
+        const name = localStorage.key(i)   //získá název mapy 
 
         const option = document.createElement("option")
         option.value = name
@@ -92,16 +99,16 @@ function updateMapsList(){
 
 
 
-
 function save(){  /* funkce pro uložení mapy */
  
 const name = prompt("Zadej název mapy")
 if(!name) return
 
-localStorage.setItem(name,JSON.stringify(map))
+localStorage.setItem(name,JSON.stringify(map)) //uložení mapy do localstorage
 
 updateMapsList()
 }
+
 
 
 function load(){
@@ -119,7 +126,11 @@ function load(){
     menuEl.classList.add("hidden")
     menu2El.classList.remove("hidden")
 
-    gridEl.style.display = "grid"
+    
+
+    
+
+    gridEl.style.display = "grid" //zobrazení gridu 
 
     drawMap()
 }
@@ -135,9 +146,9 @@ function drawMap(){
         for(let x=0;x<20;x++){
 
             const cell = document.createElement("div")
-            cell.classList.add("cell")
+            cell.classList.add("cell") 
 
-            cell.dataset.x = x
+            cell.dataset.x = x //ukládání souřadnic 
             cell.dataset.y = y
 
             const type = map[y][x]
@@ -145,18 +156,13 @@ function drawMap(){
             if(type === "road") cell.classList.add("road")
             if(type === "water") cell.classList.add("water")
 
-            gridEl.appendChild(cell)
+            gridEl.appendChild(cell)  // přidání buňky do HTML gridu
 
         }
 
     }
 
 }
-
-
-
-
-
 
 
 
@@ -175,6 +181,10 @@ newMapEl.addEventListener("click", () => {
     
     listTextEl.classList.add("hidden")
 
+    h1El.classList.add("hidden")
+    h2El.classList.remove("hidden")
+
+    
 
     createGrid()
 
@@ -183,11 +193,16 @@ newMapEl.addEventListener("click", () => {
 backEl.addEventListener("click", () => {
 
      menu2El.classList.add("hidden")
-    menuEl.classList.remove("hidden")
+     menuEl.classList.remove("hidden")
 
     loadEl.classList.remove("hidden")
     listEl.classList.remove("hidden")
 
+    h1El.classList.remove("hidden")
+    h2El.classList.add("hidden")
+
+    saveEl.classList.add("hidden")
+    listTextEl.classList.remove("hidden")
 })
 
 
